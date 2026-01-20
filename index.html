@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Math Whac-A-Mole</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- PWA additions -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#38bdf8">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background-color: #f0f9ff; /* Sky blue light */
+      overflow: hidden; /* Prevent scrolling during game */
+    }
+    .mole-up {
+      transform: translateY(0%);
+    }
+    .mole-down {
+      transform: translateY(100%);
+    }
+    /* Custom hammer cursor area */
+    .game-area {
+      cursor: crosshair;
+    }
+    .shake {
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+    .hint-glow {
+      animation: hint-glow-animation 0.7s ease-in-out;
+    }
+    @keyframes hint-glow-animation {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.7);
+        transform: translateY(0%) scale(1);
+      }
+      50% {
+        box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0);
+        transform: translateY(0%) scale(1.1);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 0, 0);
+        transform: translateY(0%) scale(1);
+      }
+    }
+    /* Particle Effect */
+    .particle-container {
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      width: 1px;
+      height: 1px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 100;
+    }
+    .particle {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      background-color: #facc15; /* yellow-400 */
+      border-radius: 50%;
+      animation: particle-explosion 0.6s ease-out forwards;
+    }
+
+    @keyframes particle-explosion {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: var(--transform-end) scale(0);
+        opacity: 0;
+      }
+    }
+    
+    .particle:nth-child(1) { --transform-end: translate(-50px, -50px); animation-delay: 0s; }
+    .particle:nth-child(2) { --transform-end: translate(50px, -50px); animation-delay: 0.02s; }
+    .particle:nth-child(3) { --transform-end: translate(-50px, 50px); animation-delay: 0.04s; }
+    .particle:nth-child(4) { --transform-end: translate(50px, 50px); animation-delay: 0.06s; }
+    .particle:nth-child(5) { --transform-end: translate(0, 70px); animation-delay: 0.08s; }
+    .particle:nth-child(6) { --transform-end: translate(0, -70px); animation-delay: 0.1s; }
+    .particle:nth-child(7) { --transform-end: translate(70px, 0); animation-delay: 0.12s; }
+    .particle:nth-child(8) { --transform-end: translate(-70px, 0); animation-delay: 0.14s; }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "rxjs": "https://esm.sh/rxjs@^7.8.2?conditions=es2015",
+    "rxjs/operators": "https://esm.sh/rxjs@^7.8.2/operators?conditions=es2015",
+    "rxjs/ajax": "https://esm.sh/rxjs@^7.8.2/ajax?conditions=es2015",
+    "rxjs/webSocket": "https://esm.sh/rxjs@^7.8.2/webSocket?conditions=es2015",
+    "rxjs/testing": "https://esm.sh/rxjs@^7.8.2/testing?conditions=es2015",
+    "rxjs/fetch": "https://esm.sh/rxjs@^7.8.2/fetch?conditions=es2015",
+    "@angular/compiler": "https://esm.sh/@angular/compiler@^21.1.0?external=rxjs",
+    "@angular/platform-browser": "https://esm.sh/@angular/platform-browser@^21.1.0?external=rxjs",
+    "@angular/core": "https://esm.sh/@angular/core@^21.1.0?external=rxjs",
+    "@angular/common": "https://esm.sh/@angular/common@^21.1.0?external=rxjs"
+  }
+}
+</script>
+</head>
+<body>
+  <app-root></app-root>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
