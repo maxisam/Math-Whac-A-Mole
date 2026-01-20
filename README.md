@@ -1,20 +1,55 @@
+# 🧮 Math Whac-A-Mole
+
+A fun, interactive educational game built with **Angular v21** and **Signals**. Test your multiplication skills by whacking the mole holding the correct answer!
+
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+<!-- Suggestion: Add a screenshot of the game here once available -->
+<!-- <img src="screenshot.png" alt="Math Whac-A-Mole Gameplay" width="600" /> -->
 </div>
 
-# Run and deploy your AI Studio app
+## 🎮 Features
 
-This contains everything you need to run your app locally.
+- **Angular Signals**: Fully reactive state management using Angular's latest reactivity model.
+- **Tailwind CSS**: Beautiful, responsive, and animated UI.
+- **Gameplay**:
+  - Solve multiplication problems (e.g., `5 x 3 = ?`).
+  - Whack the mole with the correct number.
+  - Earn points for correct hits, lose points for mistakes.
+  - Race against the 60-second timer!
+- **High Score**: Tracks your best performance locally.
 
-View your app in AI Studio: https://ai.studio/apps/drive/11SPYF6RZf1xSUHYz5XViiK3nyiAdM4bw
+## 🛠 Tech Stack
 
-## Run Locally
+- **Framework**: [Angular](https://angular.dev/) (v21)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: Signal-based Store Service
+- **Build**: Vite / Angular CLI
 
-**Prerequisites:**  Node.js
+## 🚀 Run Locally
 
+**Prerequisites:** Node.js (v18+)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1.  **Install dependencies:**
+    ```bash
+    yarn
+    ```
+
+2.  **Start the development server:**
+    ```bash
+    npm run dev
+    # or
+    ng serve
+    ```
+
+3.  **Play:**
+    Open your browser and navigate to `http://localhost:4200/`.
+
+## 🤖 For AI Agents & Contributors
+
+Please refer to [agents.md](./agents.md) for coding standards, architectural guidelines, and best practices before making changes.
+
+---
+
+<div align="center">
+Built with ❤️ using Angular
+</div>
