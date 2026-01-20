@@ -7,12 +7,8 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <!-- PWA additions -->
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#38bdf8">
-
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&amp;display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
@@ -106,6 +102,7 @@
     "rxjs/webSocket": "https://esm.sh/rxjs@^7.8.2/webSocket?conditions=es2015",
     "rxjs/testing": "https://esm.sh/rxjs@^7.8.2/testing?conditions=es2015",
     "rxjs/fetch": "https://esm.sh/rxjs@^7.8.2/fetch?conditions=es2015",
+    "rxjs/provider": "https://esm.sh/@angular/core/src/di/provider?conditions=es2015",
     "@angular/compiler": "https://esm.sh/@angular/compiler@^21.1.0?external=rxjs",
     "@angular/platform-browser": "https://esm.sh/@angular/platform-browser@^21.1.0?external=rxjs",
     "@angular/core": "https://esm.sh/@angular/core@^21.1.0?external=rxjs",
@@ -113,20 +110,10 @@
   }
 }
 </script>
+  <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
   <app-root></app-root>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(registration => {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          }, err => {
-            console.log('ServiceWorker registration failed: ', err);
-          });
-      });
-    }
-  </script>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 </html>
