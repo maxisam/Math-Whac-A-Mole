@@ -1,18 +1,16 @@
 {
-  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
-  "index": "/index.html",
+  "$schema": "https://json.schemastore.org/ngsw-config",
+  "index": "index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "resources": {
         "files": [
-          "/favicon.ico",
-          "/index.csr.html",
-          "/index.html",
-          "/manifest.webmanifest",
-          "/*.css",
-          "/*.js"
+          "index.html",
+          "manifest.webmanifest",
+          "*.css",
+          "*.js"
         ]
       }
     },
@@ -22,8 +20,33 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+          "assets/**"
         ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "google-fonts",
+      "urls": [
+        "https://fonts.googleapis.com/**",
+        "https://fonts.gstatic.com/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 5,
+        "maxAge": "365d",
+        "strategy": "cacheFirst"
+      }
+    },
+    {
+      "name": "tailwind-css",
+      "urls": [
+        "https://cdn.tailwindcss.com"
+      ],
+      "cacheConfig": {
+        "maxSize": 2,
+        "maxAge": "365d",
+        "strategy": "cacheFirst"
       }
     }
   ]

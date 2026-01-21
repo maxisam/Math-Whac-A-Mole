@@ -1,4 +1,3 @@
-
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Mole } from '../services/game.store';
@@ -34,29 +33,31 @@ import { ParticleEffectComponent } from './particle-effect.component';
         [class.hint-glow]="mole().isHinted"
         (click)="onWhack()"
       >
-        <!-- Mole Face -->
-         @if (!mole().isHit) {
-            <!-- Eyes -->
-            <div class="flex gap-4 mb-1">
-              <div class="w-2 h-4 bg-black rounded-full animate-pulse"></div>
-              <div class="w-2 h-4 bg-black rounded-full animate-pulse"></div>
-            </div>
-            <!-- Nose -->
-            <div class="w-4 h-3 bg-pink-400 rounded-full mb-1"></div>
-         } @else {
-             <!-- Hit Face -->
-             <div class="text-white font-bold text-xl">
-                 @if(mole().isCorrect) {
-                     ★
-                 } @else {
-                     X
-                 }
-             </div>
-         }
+        <div class="pointer-events-none flex flex-col items-center">
+            <!-- Mole Face -->
+            @if (!mole().isHit) {
+                <!-- Eyes -->
+                <div class="flex gap-4 mb-1">
+                <div class="w-2 h-4 bg-black rounded-full animate-pulse"></div>
+                <div class="w-2 h-4 bg-black rounded-full animate-pulse"></div>
+                </div>
+                <!-- Nose -->
+                <div class="w-4 h-3 bg-pink-400 rounded-full mb-1"></div>
+            } @else {
+                <!-- Hit Face -->
+                <div class="text-white font-bold text-xl">
+                    @if(mole().isCorrect) {
+                        ★
+                    } @else {
+                        X
+                    }
+                </div>
+            }
 
-        <!-- The Number Plate -->
-        <div class="mt-1 bg-white px-2 py-0.5 rounded-lg border-2 border-gray-300 shadow-sm">
-          <span class="text-xl font-bold text-gray-800">{{ mole().value }}</span>
+            <!-- The Number Plate -->
+            <div class="mt-1 bg-white px-2 py-0.5 rounded-lg border-2 border-gray-300 shadow-sm">
+            <span class="text-xl font-bold text-gray-800">{{ mole().value }}</span>
+            </div>
         </div>
       </div>
 
