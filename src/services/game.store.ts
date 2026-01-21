@@ -1,4 +1,3 @@
-
 import { Injectable, signal, computed, effect } from '@angular/core';
 
 export interface Mole {
@@ -11,7 +10,12 @@ export interface Mole {
   isHinted: boolean; // For new hint feature
 }
 
-export type GameStatus = 'idle' | 'playing' | 'gameover';
+export interface HighScore {
+  name: string;
+  score: number;
+}
+
+export type GameStatus = 'idle' | 'playing' | 'gameover' | 'highscore-entry';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +40,10 @@ export class GameStore {
     }))
   );
 
-  readonly highScore = signal<number>(0);
+  private readonly HIGH_SCORE_KEY = 'math-mole-high-scores';
+  readonly highScores = signal<HighScore[]>([]);
+  readonly showHighScores = signal<boolean>(false);
+
 
   // Computed
   readonly displayProblem = computed(() => {
@@ -55,7 +62,28 @@ export class GameStore {
   private moleDuration = 1500; // ms
 
   constructor() {
-    // Load high score if available
+    this.loadHighScores();
+  }
+
+  private loadHighScores() {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      const scores = localStorage.getItem(this.HIGH_SCORE_KEY);
+      if (scores) {
+        this.highScores.set(JSON.parse(scores));
+      }
+    } catch (e) {
+      console.error('Could not load high scores', e);
+    }
+  }
+
+  private saveHighScores() {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      localStorage.setItem(this.HIGH_SCORE_KEY, JSON.stringify(this.highScores()));
+    } catch (e) {
+      console.error('Could not save high scores', e);
+    }
   }
 
   startGame() {
@@ -64,6 +92,7 @@ export class GameStore {
     this.timeLeft.set(60);
     this.resetMoles();
     this.generateProblem();
+    this.showHighScores.set(false);
     
     this.gameLoopId = setInterval(() => this.tick(), 100);
     this.timerId = setInterval(() => {
@@ -80,9 +109,39 @@ export class GameStore {
   endGame() {
     clearInterval(this.gameLoopId);
     clearInterval(this.timerId);
+
+    const currentScore = this.score();
+    const scores = this.highScores();
+    const lowestHighScore = scores.length > 0 ? scores[scores.length - 1].score : 0;
+
+    if (currentScore > 0 && (scores.length < 10 || currentScore > lowestHighScore)) {
+      this.status.set('highscore-entry');
+    } else {
+      this.status.set('gameover');
+    }
+  }
+
+  addHighScore(name: string) {
+    const trimmedName = name.trim();
+    if (!trimmedName) return;
+
+    const newScore: HighScore = { name: trimmedName, score: this.score() };
+
+    this.highScores.update(scores => 
+      [...scores, newScore]
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10)
+    );
+
+    this.saveHighScores();
     this.status.set('gameover');
-    if (this.score() > this.highScore()) {
-      this.highScore.set(this.score());
+  }
+
+  toggleHighScores(show?: boolean) {
+    if (typeof show === 'boolean') {
+      this.showHighScores.set(show);
+    } else {
+      this.showHighScores.update(s => !s);
     }
   }
 
