@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Math Whac-A-Mole</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <!-- PWA additions -->
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#38bdf8">
@@ -17,45 +18,74 @@
   <style>
     body {
       font-family: 'Fredoka', sans-serif;
-      background-color: #f0f9ff; /* Sky blue light */
-      overflow: hidden; /* Prevent scrolling during game */
+      background-color: #f0f9ff;
+      /* Sky blue light */
+      overflow: hidden;
+      /* Prevent scrolling during game */
     }
+
     .mole-up {
       transform: translateY(0%);
     }
+
     .mole-down {
       transform: translateY(100%);
     }
+
     /* Custom hammer cursor area */
     .game-area {
       cursor: crosshair;
     }
+
     .shake {
-      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+      animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
     }
+
     @keyframes shake {
-      10%, 90% { transform: translate3d(-1px, 0, 0); }
-      20%, 80% { transform: translate3d(2px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-      40%, 60% { transform: translate3d(4px, 0, 0); }
+
+      10%,
+      90% {
+        transform: translate3d(-1px, 0, 0);
+      }
+
+      20%,
+      80% {
+        transform: translate3d(2px, 0, 0);
+      }
+
+      30%,
+      50%,
+      70% {
+        transform: translate3d(-4px, 0, 0);
+      }
+
+      40%,
+      60% {
+        transform: translate3d(4px, 0, 0);
+      }
     }
+
     .hint-glow {
       animation: hint-glow-animation 0.7s ease-in-out;
     }
+
     @keyframes hint-glow-animation {
       0% {
         box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.7);
         transform: translateY(0%) scale(1);
       }
+
       50% {
         box-shadow: 0 0 20px 10px rgba(255, 255, 0, 0);
         transform: translateY(0%) scale(1.1);
       }
+
       100% {
         box-shadow: 0 0 0 0 rgba(255, 255, 0, 0);
         transform: translateY(0%) scale(1);
       }
     }
+
     /* Particle Effect */
     .particle-container {
       position: absolute;
@@ -67,13 +97,15 @@
       pointer-events: none;
       z-index: 100;
     }
+
     .particle {
       position: absolute;
       left: 0;
       top: 0;
       width: 10px;
       height: 10px;
-      background-color: #facc15; /* yellow-400 */
+      background-color: #facc15;
+      /* yellow-400 */
       border-radius: 50%;
       animation: particle-explosion 0.6s ease-out forwards;
     }
@@ -83,22 +115,54 @@
         transform: translate(0, 0) scale(1);
         opacity: 1;
       }
+
       100% {
         transform: var(--transform-end) scale(0);
         opacity: 0;
       }
     }
-    
-    .particle:nth-child(1) { --transform-end: translate(-50px, -50px); animation-delay: 0s; }
-    .particle:nth-child(2) { --transform-end: translate(50px, -50px); animation-delay: 0.02s; }
-    .particle:nth-child(3) { --transform-end: translate(-50px, 50px); animation-delay: 0.04s; }
-    .particle:nth-child(4) { --transform-end: translate(50px, 50px); animation-delay: 0.06s; }
-    .particle:nth-child(5) { --transform-end: translate(0, 70px); animation-delay: 0.08s; }
-    .particle:nth-child(6) { --transform-end: translate(0, -70px); animation-delay: 0.1s; }
-    .particle:nth-child(7) { --transform-end: translate(70px, 0); animation-delay: 0.12s; }
-    .particle:nth-child(8) { --transform-end: translate(-70px, 0); animation-delay: 0.14s; }
+
+    .particle:nth-child(1) {
+      --transform-end: translate(-50px, -50px);
+      animation-delay: 0s;
+    }
+
+    .particle:nth-child(2) {
+      --transform-end: translate(50px, -50px);
+      animation-delay: 0.02s;
+    }
+
+    .particle:nth-child(3) {
+      --transform-end: translate(-50px, 50px);
+      animation-delay: 0.04s;
+    }
+
+    .particle:nth-child(4) {
+      --transform-end: translate(50px, 50px);
+      animation-delay: 0.06s;
+    }
+
+    .particle:nth-child(5) {
+      --transform-end: translate(0, 70px);
+      animation-delay: 0.08s;
+    }
+
+    .particle:nth-child(6) {
+      --transform-end: translate(0, -70px);
+      animation-delay: 0.1s;
+    }
+
+    .particle:nth-child(7) {
+      --transform-end: translate(70px, 0);
+      animation-delay: 0.12s;
+    }
+
+    .particle:nth-child(8) {
+      --transform-end: translate(-70px, 0);
+      animation-delay: 0.14s;
+    }
   </style>
-<script type="importmap">
+  <script type="importmap">
 {
   "imports": {
     "rxjs": "https://esm.sh/rxjs@^7.8.2?conditions=es2015",
@@ -116,9 +180,11 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>
