@@ -17,6 +17,18 @@ export class AppComponent implements OnInit {
   swUpdate = inject(SwUpdate);
 
   ngOnInit() {
+    const isAmazonSilk = navigator.userAgent.includes('Silk');
+
+    if (isAmazonSilk) {
+      console.warn('Amazon Silk detected. Unregistering Service Worker to prevent caching issues.');
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (const registration of registrations) {
+          registration.unregister();
+        }
+      });
+      return; // Exit early, do not subscribe to updates
+    }
+
     if (this.swUpdate.isEnabled) {
       this.swUpdate.versionUpdates
         .pipe(filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'))
